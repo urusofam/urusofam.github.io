@@ -1,5 +1,5 @@
-import * as THREE from './node_modules/three/build/three.module.min.js';
-import { STLLoader } from './STLLoader.js';
+import * as THREE from '../node_modules/three/build/three.module.js';
+import { STLLoader } from '../loaders/STLLoader.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -28,7 +28,7 @@ const material = new THREE.MeshPhysicalMaterial({
 let mesh;
 
 const loader = new STLLoader();
-loader.load('model.stl', function (geometry){
+loader.load('../models/model.stl', function (geometry){
     mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
 });
