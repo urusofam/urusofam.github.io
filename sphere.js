@@ -15,8 +15,8 @@ scene.add(axesHelper);
 
 const material = new THREE.MeshPhysicalMaterial({
     color: 0xff0000,
-    metalness: 0,
-    roughness: 0,
+    metalness: 1,
+    roughness: 1,
     opacity: 1,
     transparent: false,
     transmission: 0.99,
@@ -29,10 +29,12 @@ let mesh;
 
 const loader = new STLLoader();
 loader.load('./models/model.stl', function (geometry){
+    geometry.scale(0.2,0.2,0.2)
     mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
+    mesh.rotation.x = -Math.PI / 2;
 });
-    
+
 let mouseDown = false;
 let mousewheel = false;
 let prevMousePos = { x: 0, y: 0 };
@@ -58,17 +60,17 @@ document.addEventListener('mouseup', event => {
 document.addEventListener('mousemove', event => {
     const deltaMove = {
         x: event.offsetX - prevMousePos.x,
-        y: (event.offsetY - prevMousePos.y) * -1
+        y: event.offsetY - prevMousePos.y
     };
 
     if (mouseDown) {
-        mesh.position.x += deltaMove.x * 0.01;
-        mesh.position.z += deltaMove.y * 0.01;
+        mesh.position.x += deltaMove.x * 0.03;
+        mesh.position.z += deltaMove.y * 0.03;
     }
 
     else if (mousewheel) {
-        mesh.rotation.x -= (deltaMove.y * 0.01) * -1;
-        mesh.rotation.y -= (deltaMove.x * 0.01) * -1;
+        mesh.rotation.z -= (deltaMove.x * 0.03) * -1;
+        mesh.rotation.y -= (deltaMove.y * 0.03) * -1;
     }
     prevMousePos = { x: event.offsetX, y: event.offsetY };
 });
